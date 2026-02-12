@@ -46,6 +46,22 @@ buscarCuenta=function(numeroCuenta){
 agregarCuenta=function(cuenta){
     //Si ya existe mostrar un alert CUENTA EXISTENTE
     //Si se agrega, mostrar un alert CUENTA AGREGADA
+        let encontrado = false;
+    for (let i = 0; i < cuentas.length; i++) {
+        if (cuentas[i].numeroCuenta==cuenta.numeroCuenta) {
+            encontrado = true;
+            break;
+        } else {
+            encontrado = false;
+        }
+    }
+    if (!encontrado) {
+        cuentas.push(cuenta);
+        alert ("CUENTA AGREGADA");
+        return true;
+    }
+    alert ("CUENTA EXISTENTE");
+    return false;
 }
 
 agregar=function(){
