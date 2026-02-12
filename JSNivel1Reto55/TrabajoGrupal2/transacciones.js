@@ -15,7 +15,14 @@ cargar=function(){
     si existe retorna el objeto cuenta, caso contrario retorna null. 
 */
 buscarCuenta=function(numeroCuenta){
-
+  let cuentaEncontrada = null;
+    for (let i = 0; i < cuentas.length; i++) {
+        if (cuentas[i].numeroCuenta == numeroCuenta) {
+            cuentaEncontrada = cuentas[i];
+            break;
+        }
+    }
+    return cuentaEncontrada;
 }
 
 ejecutarBusqueda=function(){
