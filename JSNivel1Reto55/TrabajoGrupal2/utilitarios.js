@@ -14,7 +14,11 @@ mostrarTextoEnCaja = function(idComponente,mensaje){
     componente=document.getElementById(idComponente);
     componente.value = mensaje;
 }
-
+mostrarTextoDiv = function (idComponente, mensaje) {
+    let componente;
+    componente = document.getElementById(idComponente);
+    componente.innerHTML = mensaje;
+}
 recuperarTexto=function(idComponente){
     let componente;
     let valorIngresado;
