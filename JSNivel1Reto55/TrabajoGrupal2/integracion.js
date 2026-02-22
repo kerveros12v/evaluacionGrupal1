@@ -15,6 +15,7 @@ cargar = function () {
     ocultarComponente("divMovimientos");
     ocultarComponente("divTransacciones");
     mostrarCuentas();
+    mostrarTransacciones("");
 }
 /*
     En este archivo se deben colocar todas las funciones de cuentas, movimientos y transacciones
@@ -92,8 +93,10 @@ ejecutarBusqueda = function () {
     let cuentaLocalizada = buscarCuenta(campoCuenta);
     if (cuentaLocalizada != null) {
         alert("Cuenta: " + cuentaLocalizada.numeroCuenta + "---Nombre: " + cuentaLocalizada.nombre + " " + cuentaLocalizada.apellido + "---Saldo: " + cuentaLocalizada.saldo);
+        mostrarTransacciones(campoCuenta);
     } else {
         alert("No existe la cuenta");
+        mostrarTransacciones("");
     }
 }
 //Cuando se realiza un depósito de forma exitosa, se debe crear un objeto movimiento
@@ -105,7 +108,7 @@ depositar = function (numeroCuenta, monto) {
     cuentaAfectada = buscarCuenta(numeroCuenta);
     //Al saldo actual de la cuenta afectada, le suma el monto que recibe como parámetro
     cuentaAfectada.saldo += monto;
-    let movimiento = { numeroCuenta: cuentaAfectada.cuenta, monto: monto, tipo: "C" };
+    let movimiento = { numeroCuenta: numeroCuenta, monto: monto, tipo: "C" };
     movimientos.push(movimiento);
 }
 
@@ -122,6 +125,7 @@ ejecutarDeposito = function () {
     // alert("TRANSACCION EXITOSA");
     //Muestra en pantalla el nuevo saldo de la cuenta
     alert("Saldo actual: " + buscarCuenta(campoCuenta).saldo);
+    mostrarTransacciones(campoCuenta);
 }
 ejecutarRetirar = function () {
     //Toma el numero de cuenta ingresado en la caja de texto
@@ -136,6 +140,7 @@ ejecutarRetirar = function () {
     // alert("TRANSACCION EXITOSA");
     //Muestra en pantalla el nuevo saldo de la cuenta
     alert("Saldo actual: " + buscarCuenta(campoCuenta).saldo);
+    mostrarTransacciones(campoCuenta);
 }
 
 retirar = function (numeroCuenta, monto) {
@@ -150,7 +155,7 @@ retirar = function (numeroCuenta, monto) {
         //Cuando se realiza un retiro de forma exitosa, se debe crear un objeto movimiento
         //con el tipo D, que corresponde a DEBITO, el número de cuenta a la que se hizo el retiro
         //y el monto que se retiró. Este objeto movimiento se agrega al arreglo movimientos
-        let movimiento = { numeroCuenta: cuentaAfectada.cuenta, monto: monto, tipo: "D" };
+        let movimiento = { numeroCuenta: numeroCuenta, monto: monto, tipo: "D" };
         movimientos.push(movimiento);
         alert("TRANSACCION EXITOSA");
     } else {
@@ -210,10 +215,32 @@ mostrarSeccionCuentas = function () {
     ocultarComponente("divMovimientos");
     ocultarComponente("divTransacciones");
 }
+mostrarTransacciones = function (numeroCuenta) {
+    let lista = movimientos;
+    if (numeroCuenta && numeroCuenta.trim() !== "") {
+        lista = [];
+        for (let i = 0; i < movimientos.length; i++) {
+            if (movimientos[i].numeroCuenta === numeroCuenta) {
+                lista.push(movimientos[i]);
+            }
+        }
+    } else {
+        lista = [];
+    }
+    let tabla = "<table><tr><th>Cuenta</th><th>Monto</th><th>Tipo</th></tr>";
+    for (let i = 0; i < lista.length; i++) {
+        let m = lista[i];
+        let tipoTexto = m.tipo === "C" ? "Crédito" : "Débito";
+        tabla += "<tr><td>" + m.numeroCuenta + "</td><td>" + m.monto + "</td><td>" + tipoTexto + "</td></tr>";
+    }
+    tabla += "</table>";
+    mostrarTextoDiv("infoTransacciones", tabla);
+}
 mostrarSeccionTransacciones = function () {
     ocultarComponente("divCuentas");
     ocultarComponente("divMovimientos");
     mostrarComponente("divTransacciones");
+    mostrarTransacciones("");
 }
 mostrarSeccionMovimientos = function () {
     ocultarComponente("divCuentas");

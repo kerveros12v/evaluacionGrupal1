@@ -85,8 +85,30 @@ body{
 .inferior{
     display: flex;
     flex:1;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     margin-top: 30px;
+    width: 100%;
+}
+#infoCuentas,
+#infoTransacciones,
+#tablaMovimientos {
+    width: 100%;
+    max-width: 800px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+table th, table td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: left;
+}
+table th {
+    background: #eee;
 }
 .titulo{
     display: flex;
